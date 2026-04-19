@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+logs/*.log
+wiki/.search.db
+outputs/reports/lint-report.md

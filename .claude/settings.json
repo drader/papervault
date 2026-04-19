@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "wiki-search": {
+      "command": "obsidian-hybrid-search",
+      "args": ["--vault", "./wiki"],
+      "env": {}
+    }
+  },
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(cat:*)",
+      "Bash(rg:*)"
+    ]
+  }
+}

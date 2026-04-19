@@ -1,0 +1,27 @@
+{
+  "name": "papervault",
+  "version": "0.1.0",
+  "description": "Agentic research paper wiki: ingest arXiv papers, build a growing knowledge base automatically",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "setup": "bash scripts/setup.sh",
+    "install-daemon": "bash scripts/install.sh",
+    "check-deps": "obsidian-hybrid-search --version 2>/dev/null || echo 'obsidian-hybrid-search not installed. Run: npm install -g obsidian-hybrid-search'"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/node-cron": "^3.0.11",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
