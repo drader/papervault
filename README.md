@@ -1,24 +1,21 @@
 # papervault
 
-An agentic research paper knowledge base. Drop arXiv PDFs or abstracts in. Agents extract contributions, methods, and limitations — linking authors, venues, and concepts into a growing wiki automatically.
+**Agentic research paper knowledge base — built on [memex](https://github.com/drader/memex)**
 
-Built on [memex](https://github.com/drader/memex).
+Drop arXiv PDFs or abstracts in. Agents extract contributions, methods, and limitations — linking authors, venues, and concepts into a growing research wiki automatically.
+
+→ [View presentation](https://drader.github.io/papervault/presentation.html)
 
 ---
 
-## What it does
+## How it works
 
-You drop a paper into `wiki/raw/papers/`. The researcher agent — running on a schedule in the background — picks it up and produces:
+1. **Drop a paper** — Place an arXiv PDF or plain-text abstract into `wiki/raw/papers/`. The daemon picks it up on the next scheduled cycle.
+2. **Agent reads and extracts** — The researcher agent identifies the problem, contributions, methodology, results, and limitations. It resolves author names, venue details, and referenced methods.
+3. **Wiki pages are written** — A structured paper summary, author profiles, method pages, concept pages, and venue pages are created and cross-linked bidirectionally.
+4. **Orchestrator promotes patterns** — Every Monday the orchestrator scans agent memory for recurring patterns, promotes them to synthesis pages, and flags orphans and missing citations.
 
-- A structured paper summary page (`wiki/papers/`) with problem, contributions, methodology, results, and limitations
-- Author profile pages (`wiki/authors/`) linked bidirectionally to the paper
-- Method pages (`wiki/methods/`) for any algorithm or technique introduced or referenced
-- Concept pages (`wiki/concepts/`) for high-level research area ideas
-- Venue pages (`wiki/venues/`) for the conference or journal
-
-The orchestrator runs every Monday to promote recurring patterns from agent memory into the shared wiki, and to check for orphan pages, missing citations, and unresolved conflicts.
-
-When the raw queue is empty, the researcher agent runs a Wakeup routine: scanning for papers with missing links, flagging gaps, and writing a "papers to consider" note to the journal.
+Every page links back to its sources. When the queue is empty, the agent runs a **Wakeup routine** — scanning for missing links, flagging gaps, and writing a "papers to consider" note to the journal.
 
 ---
 
