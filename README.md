@@ -4,7 +4,7 @@
 
 Drop arXiv PDFs or abstracts in. Agents extract contributions, methods, and limitations — linking authors, venues, and concepts into a growing research wiki automatically.
 
-→ [View presentation](https://drader.github.io/papervault/presentation.html)
+→ [View presentation](https://drader.github.io/papervault/)
 
 ---
 
