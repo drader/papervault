@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="lang-tr" lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -114,6 +114,15 @@
   .back-link:hover { color: var(--accent); }
   .report-link { position: fixed; top: 16px; right: 24px; font-size: 11px; color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; z-index: 500; display: flex; align-items: center; gap: 6px; transition: color 0.15s; border: 1px solid var(--accent-dim); padding: 4px 10px; border-radius: 4px; }
   .report-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── Language switcher ─── */
+  .lang-tr .en { display: none; }
+  .lang-en .tr { display: none; }
+
+  .lang-switch { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 500; display: flex; border: 1px solid var(--accent-muted); border-radius: 4px; overflow: hidden; }
+  .lang-btn { background: none; border: none; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); padding: 4px 12px; letter-spacing: 0.1em; transition: color 0.15s; }
+  .lang-btn:hover { color: var(--accent); }
+  .lang-btn.active { background: var(--accent-muted); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -123,25 +132,41 @@
   memex ecosystem
 </a>
 
+<div class="lang-switch">
+  <button class="lang-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
 <a href="architecture/index.html" class="report-link">
   <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-  architecture
+  <span class="tr">mimari</span><span class="en">architecture</span>
 </a>
 
 <div class="deck">
 
   <!-- SLIDE 1: TITLE -->
   <div class="slide active" id="s1">
-    <div class="title-tag">built on memex</div>
+    <div class="title-tag">
+      <span class="tr">memex üzerine inşa edildi</span>
+      <span class="en">built on memex</span>
+    </div>
     <h1>papervault</h1>
     <div class="divider"></div>
     <p style="font-size:clamp(16px,2.2vw,24px); color:var(--text-dim);">
-      agentic research paper knowledge base
+      <span class="tr">ajansal akademik paper bilgi tabanı</span>
+      <span class="en">agentic research paper knowledge base</span>
     </p>
     <p class="sub" style="margin-top:32px;">
-      Drop arXiv PDFs or abstracts in.<br>
-      Agents extract contributions, methods, and limitations —<br>
-      linking authors, venues, and concepts automatically.
+      <span class="tr">
+        arXiv PDF veya özetlerini bırak.<br>
+        Ajanlar katkıları, yöntemleri ve kısıtlamaları çıkarır —<br>
+        yazarları, etkinlikleri ve kavramları otomatik olarak bağlar.
+      </span>
+      <span class="en">
+        Drop arXiv PDFs or abstracts in.<br>
+        Agents extract contributions, methods, and limitations —<br>
+        linking authors, venues, and concepts automatically.
+      </span>
     </p>
     <div class="glow-line" style="margin-top:48px;"></div>
     <p class="sub"><span style="color:var(--accent);">github.com/drader/papervault</span></p>
@@ -149,13 +174,20 @@
 
   <!-- SLIDE 2: THE PROMISE -->
   <div class="slide" id="s2">
-    <div class="label">The promise</div>
-    <h2>A research wiki that<br>grows while you read.</h2>
+    <div class="label">
+      <span class="tr">Vaat</span>
+      <span class="en">The promise</span>
+    </div>
+    <h2>
+      <span class="tr">Okurken büyüyen<br>bir araştırma wiki'si.</span>
+      <span class="en">A research wiki that<br>grows while you read.</span>
+    </h2>
     <div class="terminal" style="margin-top:24px;">
       <br>
       <div><span class="prompt">$ </span><span class="cmd">cp attention-is-all-you-need.pdf wiki/raw/papers/</span></div>
       <div class="out">&nbsp;</div>
-      <div class="out"># Tomorrow morning:</div>
+      <div class="out tr"># Yarın sabah:</div>
+      <div class="out en"># Tomorrow morning:</div>
       <div class="out">&nbsp;</div>
       <div><span class="prompt">$ </span><span class="cmd">ls wiki/papers/</span></div>
       <div><span class="hi">2017-attention-is-all-you-need.md</span></div>
@@ -163,129 +195,208 @@
       <div><span class="prompt">$ </span><span class="cmd">ls wiki/authors/</span></div>
       <div><span class="hi">vaswani-ashish.md  shazeer-noam.md  parmar-niki.md  ...</span></div>
       <div class="out">&nbsp;</div>
-      <div class="out"># Methods, venues, concepts — all linked. No manual work.</div>
+      <div class="out tr"># Yöntemler, etkinlikler, kavramlar — hepsi bağlı. Manuel iş yok.</div>
+      <div class="out en"># Methods, venues, concepts — all linked. No manual work.</div>
     </div>
   </div>
 
   <!-- SLIDE 3: THE PROBLEMS -->
   <div class="slide" id="s3">
-    <div class="label">The reality</div>
-    <h2 style="margin-bottom:28px;">Papers pile up.<br>Knowledge evaporates.</h2>
+    <div class="label">
+      <span class="tr">Gerçek</span>
+      <span class="en">The reality</span>
+    </div>
+    <h2 style="margin-bottom:28px;">
+      <span class="tr">Paper'lar birikir.<br>Bilgi buharlaşır.</span>
+      <span class="en">Papers pile up.<br>Knowledge evaporates.</span>
+    </h2>
     <div class="problem-wall">
       <div class="wall-item">
-        <div class="wall-num">Problem 01</div>
-        <h3>Insights evaporate</h3>
-        <p>You read a paper, take notes — then forget them. The insight lives in a PDF, not in your thinking.</p>
+        <div class="wall-num">
+          <span class="tr">Sorun 01</span>
+          <span class="en">Problem 01</span>
+        </div>
+        <h3>
+          <span class="tr">İçgörüler kaybolur</span>
+          <span class="en">Insights evaporate</span>
+        </h3>
+        <p>
+          <span class="tr">Bir paper okursun, not alırsın — sonra unutursun. İçgörü PDF'de kalır, düşüncende değil.</span>
+          <span class="en">You read a paper, take notes — then forget them. The insight lives in a PDF, not in your thinking.</span>
+        </p>
       </div>
       <div class="wall-item">
-        <div class="wall-num">Problem 02</div>
-        <h3>Connections stay hidden</h3>
-        <p>Paper A cites method B which appears in paper C — but you only see that when you stumble on it.</p>
+        <div class="wall-num">
+          <span class="tr">Sorun 02</span>
+          <span class="en">Problem 02</span>
+        </div>
+        <h3>
+          <span class="tr">Bağlantılar gizli kalır</span>
+          <span class="en">Connections stay hidden</span>
+        </h3>
+        <p>
+          <span class="tr">Paper A, paper C'de yer alan yöntem B'yi atıflar — ama bunu ancak rastlayınca görürsün.</span>
+          <span class="en">Paper A cites method B which appears in paper C — but you only see that when you stumble on it.</span>
+        </p>
       </div>
       <div class="wall-item">
-        <div class="wall-num">Problem 03</div>
-        <h3>Author context is lost</h3>
-        <p>You forget which groups work on which problems. Reading a new paper is always from a cold start.</p>
+        <div class="wall-num">
+          <span class="tr">Sorun 03</span>
+          <span class="en">Problem 03</span>
+        </div>
+        <h3>
+          <span class="tr">Yazar bağlamı kaybolur</span>
+          <span class="en">Author context is lost</span>
+        </h3>
+        <p>
+          <span class="tr">Hangi grupların hangi problemlerde çalıştığını unutursun. Yeni bir paper okumak her seferinde sıfırdan başlar.</span>
+          <span class="en">You forget which groups work on which problems. Reading a new paper is always from a cold start.</span>
+        </p>
       </div>
       <div class="wall-item">
-        <div class="wall-num">Problem 04</div>
-        <h3>Patterns stay invisible</h3>
-        <p>Five papers independently suggest the same thing. You never notice because nothing surfaces it.</p>
+        <div class="wall-num">
+          <span class="tr">Sorun 04</span>
+          <span class="en">Problem 04</span>
+        </div>
+        <h3>
+          <span class="tr">Örüntüler görünmez kalır</span>
+          <span class="en">Patterns stay invisible</span>
+        </h3>
+        <p>
+          <span class="tr">Beş paper bağımsız olarak aynı şeyi önerir. Hiçbir şey onu yüzeye çıkarmadığı için fark etmezsin.</span>
+          <span class="en">Five papers independently suggest the same thing. You never notice because nothing surfaces it.</span>
+        </p>
       </div>
     </div>
-    <p class="sub" style="margin-top:24px;">papervault solves all four.</p>
+    <p class="sub" style="margin-top:24px;">
+      <span class="tr">papervault dördünü de çözer.</span>
+      <span class="en">papervault solves all four.</span>
+    </p>
   </div>
 
   <!-- SLIDE 4: PROBLEM 1 + FIX -->
   <div class="slide" id="s4">
-    <div class="label"><span>Problem 01</span> — Insights evaporate</div>
-    <h2>You read it. You understood it.<br>You forgot it.</h2>
+    <div class="label">
+      <span class="tr"><span>Sorun 01</span> — İçgörüler kaybolur</span>
+      <span class="en"><span>Problem 01</span> — Insights evaporate</span>
+    </div>
+    <h2>
+      <span class="tr">Okudun. Anladın.<br>Unuttun.</span>
+      <span class="en">You read it. You understood it.<br>You forgot it.</span>
+    </h2>
     <div class="problem-card" style="margin-top:24px;">
-      <h3>The situation</h3>
+      <h3>
+        <span class="tr">Durum</span>
+        <span class="en">The situation</span>
+      </h3>
       <p>
-        Reading a paper produces understanding — but understanding without structure decays fast.
-        Highlights and annotations stay in the PDF viewer. Margin notes stay on paper.
-        Neither connects to anything. Next month the paper is a citation you vaguely remember.
+        <span class="tr">Paper okumak anlayış üretir — ama yapısız anlayış hızla çürür. Vurgular ve notlar PDF görüntüleyicide kalır. Kenar notları kağıtta kalır. Hiçbiri hiçbir şeye bağlanmaz. Gelecek ay paper, belirsizce hatırladığın bir atıfa dönüşür.</span>
+        <span class="en">Reading a paper produces understanding — but understanding without structure decays fast. Highlights and annotations stay in the PDF viewer. Margin notes stay on paper. Neither connects to anything. Next month the paper is a citation you vaguely remember.</span>
       </p>
     </div>
     <div class="solution-card" style="margin-top:16px;">
-      <h3>The fix</h3>
+      <h3>
+        <span class="tr">Çözüm</span>
+        <span class="en">The fix</span>
+      </h3>
       <p>
-        The researcher agent reads the paper and writes a structured summary to
-        <span style="color:var(--accent)">wiki/papers/</span> —
-        contributions, methodology, results, limitations, and open questions.
-        Persistent, searchable, and cross-linked from day one.
-        Run <span style="color:var(--accent)">/ingest</span> to process immediately,
-        or drop the file and let the daemon handle it overnight.
+        <span class="tr">Araştırmacı ajan paper'ı okur ve <span style="color:var(--accent)">wiki/papers/</span>'a yapılandırılmış bir özet yazar — katkılar, metodoloji, sonuçlar, kısıtlamalar ve açık sorular. Kalıcı, aranabilir ve başından itibaren çapraz bağlantılı. Hemen işlemek için <span style="color:var(--accent)">/ingest</span> çalıştır ya da dosyayı bırak ve daemon'un gece halletmesini bekle.</span>
+        <span class="en">The researcher agent reads the paper and writes a structured summary to <span style="color:var(--accent)">wiki/papers/</span> — contributions, methodology, results, limitations, and open questions. Persistent, searchable, and cross-linked from day one. Run <span style="color:var(--accent)">/ingest</span> to process immediately, or drop the file and let the daemon handle it overnight.</span>
       </p>
     </div>
   </div>
 
   <!-- SLIDE 5: PROBLEM 2 + FIX -->
   <div class="slide" id="s5">
-    <div class="label"><span>Problem 02 + 03</span> — Connections and context</div>
-    <h2>The graph exists.<br>You just can't see it.</h2>
+    <div class="label">
+      <span class="tr"><span>Sorun 02 + 03</span> — Bağlantılar ve bağlam</span>
+      <span class="en"><span>Problem 02 + 03</span> — Connections and context</span>
+    </div>
+    <h2>
+      <span class="tr">Graf mevcut.<br>Sadece göremiyorsun.</span>
+      <span class="en">The graph exists.<br>You just can't see it.</span>
+    </h2>
     <div class="problem-card" style="margin-top:24px;">
-      <h3>The situation</h3>
+      <h3>
+        <span class="tr">Durum</span>
+        <span class="en">The situation</span>
+      </h3>
       <p>
-        Research is a dense citation graph — but your notes are flat files.
-        Authors appear across dozens of papers with no central profile.
-        Methods get rediscovered every time you read a new paper that uses them.
-        Venues have no identity beyond their abbreviation.
+        <span class="tr">Araştırma yoğun bir atıf grafıdır — ama notların düz dosyalar. Yazarlar merkezi bir profil olmadan düzinelerce paper'da görünür. Yöntemler, onları kullanan yeni bir paper okudukça yeniden keşfedilir. Etkinliklerin kısaltmalarının ötesinde bir kimliği yok.</span>
+        <span class="en">Research is a dense citation graph — but your notes are flat files. Authors appear across dozens of papers with no central profile. Methods get rediscovered every time you read a new paper that uses them. Venues have no identity beyond their abbreviation.</span>
       </p>
     </div>
     <div class="solution-card" style="margin-top:16px;">
-      <h3>The fix</h3>
+      <h3>
+        <span class="tr">Çözüm</span>
+        <span class="en">The fix</span>
+      </h3>
       <p>
-        Every ingest creates or updates <span style="color:var(--accent)">wiki/authors/</span>,
-        <span style="color:var(--accent)">wiki/methods/</span>, and
-        <span style="color:var(--accent)">wiki/venues/</span> —
-        each page linking back to every paper it appears in.
-        Cross-links are bidirectional. The graph is explicit and searchable via MCP hybrid search.
+        <span class="tr">Her ingest, <span style="color:var(--accent)">wiki/authors/</span>, <span style="color:var(--accent)">wiki/methods/</span> ve <span style="color:var(--accent)">wiki/venues/</span>'ı oluşturur ya da günceller — her sayfa göründüğü her paper'a geri bağlanır. Çapraz bağlantılar çift yönlüdür. Graf açık ve MCP hibrit arama ile aranabilir.</span>
+        <span class="en">Every ingest creates or updates <span style="color:var(--accent)">wiki/authors/</span>, <span style="color:var(--accent)">wiki/methods/</span>, and <span style="color:var(--accent)">wiki/venues/</span> — each page linking back to every paper it appears in. Cross-links are bidirectional. The graph is explicit and searchable via MCP hybrid search.</span>
       </p>
     </div>
   </div>
 
   <!-- SLIDE 6: PROBLEM 4 + FIX -->
   <div class="slide" id="s6">
-    <div class="label"><span>Problem 04</span> — Patterns stay invisible</div>
-    <h2>The Monday orchestrator<br>does the meta-analysis.</h2>
+    <div class="label">
+      <span class="tr"><span>Sorun 04</span> — Örüntüler görünmez kalır</span>
+      <span class="en"><span>Problem 04</span> — Patterns stay invisible</span>
+    </div>
+    <h2>
+      <span class="tr">Pazartesi orkeströrü<br>meta-analizi yapar.</span>
+      <span class="en">The Monday orchestrator<br>does the meta-analysis.</span>
+    </h2>
     <div class="problem-card" style="margin-top:24px;">
-      <h3>The situation</h3>
+      <h3>
+        <span class="tr">Durum</span>
+        <span class="en">The situation</span>
+      </h3>
       <p>
-        Recurring themes across papers — a shared assumption, a method appearing in multiple contexts,
-        an open question no one has answered — are only visible when someone reads everything at once.
-        That someone is never you. There's always a new paper to read instead.
+        <span class="tr">Paper'lar genelinde tekrarlayan temalar — ortak bir varsayım, birden fazla bağlamda görünen bir yöntem, kimsenin yanıtlamadığı açık bir soru — ancak birisi her şeyi aynı anda okuduğunda görünür. O kişi hiçbir zaman sen değilsin. Bunun yerine her zaman okuyacak yeni bir paper var.</span>
+        <span class="en">Recurring themes across papers — a shared assumption, a method appearing in multiple contexts, an open question no one has answered — are only visible when someone reads everything at once. That someone is never you. There's always a new paper to read instead.</span>
       </p>
     </div>
     <div class="solution-card" style="margin-top:16px;">
-      <h3>The fix</h3>
+      <h3>
+        <span class="tr">Çözüm</span>
+        <span class="en">The fix</span>
+      </h3>
       <p>
-        Every Monday, the orchestrator scans agent memory for patterns appearing across
-        <span style="color:var(--accent)">2+ papers</span> or
-        <span style="color:var(--accent)">3+ consecutive weeks</span>,
-        promotes them to <span style="color:var(--accent)">wiki/syntheses/</span>,
-        and writes a "papers worth reading" note to the journal.
-        Literature review on autopilot.
+        <span class="tr">Her Pazartesi, orkeströr ajan belleğini <span style="color:var(--accent)">2+ paper</span>'da veya <span style="color:var(--accent)">3+ ardışık haftada</span> görünen örüntüler için tarar, bunları <span style="color:var(--accent)">wiki/syntheses/</span>'e yükseltir ve günlüğe "okunmaya değer paper'lar" notu yazar. Otomatik pilot üzerinde literatür taraması.</span>
+        <span class="en">Every Monday, the orchestrator scans agent memory for patterns appearing across <span style="color:var(--accent)">2+ papers</span> or <span style="color:var(--accent)">3+ consecutive weeks</span>, promotes them to <span style="color:var(--accent)">wiki/syntheses/</span>, and writes a "papers worth reading" note to the journal. Literature review on autopilot.</span>
       </p>
     </div>
   </div>
 
   <!-- SLIDE 7: ARCHITECTURE -->
   <div class="slide" id="s7">
-    <div class="label">Wiki structure</div>
-    <h2 style="font-size:clamp(20px,2.8vw,36px); margin-bottom:28px;">One page per concept. Bidirectionally linked.</h2>
+    <div class="label">
+      <span class="tr">Wiki yapısı</span>
+      <span class="en">Wiki structure</span>
+    </div>
+    <h2 style="font-size:clamp(20px,2.8vw,36px); margin-bottom:28px;">
+      <span class="tr">Kavram başına bir sayfa. Çift yönlü bağlantılı.</span>
+      <span class="en">One page per concept. Bidirectionally linked.</span>
+    </h2>
     <div class="grid-3">
       <div class="arch-box">
-        <div class="arch-title">Input</div>
+        <div class="arch-title">
+          <span class="tr">Girdi</span>
+          <span class="en">Input</span>
+        </div>
         <ul>
           <li><span>raw/papers/</span></li>
-          <li><span>arXiv PDFs</span></li>
-          <li><span>.txt abstracts</span></li>
+          <li><span>arXiv PDF<span class="tr">'ler</span><span class="en">s</span></span></li>
+          <li><span>.txt <span class="tr">özetler</span><span class="en">abstracts</span></span></li>
         </ul>
       </div>
       <div class="arch-box">
-        <div class="arch-title">Agent Output</div>
+        <div class="arch-title">
+          <span class="tr">Ajan Çıktısı</span>
+          <span class="en">Agent Output</span>
+        </div>
         <ul>
           <li><span>papers/</span></li>
           <li><span>authors/</span></li>
@@ -295,43 +406,57 @@
         </ul>
       </div>
       <div class="arch-box">
-        <div class="arch-title">Orchestrator</div>
+        <div class="arch-title">
+          <span class="tr">Orkeströr</span>
+          <span class="en">Orchestrator</span>
+        </div>
         <ul>
           <li><span>syntheses/</span></li>
           <li><span>journal/</span></li>
-          <li><span>Wakeup routine</span></li>
-          <li><span>Monday scan</span></li>
+          <li><span><span class="tr">Uyandırma rutini</span><span class="en">Wakeup routine</span></span></li>
+          <li><span><span class="tr">Pazartesi taraması</span><span class="en">Monday scan</span></span></li>
         </ul>
       </div>
     </div>
     <p class="sub" style="margin-top:24px;">
-      MCP hybrid search (BM25 + vector + RRF) over the full wiki.<br>
-      Every page links back to its sources. Thousands of papers, zero config per query.
+      <span class="tr">Tüm wiki üzerinde MCP hibrit arama (BM25 + vektör + RRF).<br>Her sayfa kaynaklarına geri bağlanır. Binlerce paper, sorgu başına sıfır yapılandırma.</span>
+      <span class="en">MCP hybrid search (BM25 + vector + RRF) over the full wiki.<br>Every page links back to its sources. Thousands of papers, zero config per query.</span>
     </p>
   </div>
 
   <!-- SLIDE 8: GET STARTED -->
   <div class="slide" id="s8">
-    <div class="label">Get started</div>
-    <h2 style="margin-bottom:28px;">Three commands.</h2>
+    <div class="label">
+      <span class="tr">Başla</span>
+      <span class="en">Get started</span>
+    </div>
+    <h2 style="margin-bottom:28px;">
+      <span class="tr">Üç komut.</span>
+      <span class="en">Three commands.</span>
+    </h2>
     <div class="terminal" style="max-width:600px;">
       <br>
       <div><span class="prompt">$ </span><span class="cmd">git clone github.com/drader/papervault my-papervault</span></div>
       <div><span class="prompt">$ </span><span class="cmd">npm install && npm run setup</span></div>
       <div><span class="prompt">$ </span><span class="cmd">npm start</span></div>
       <div class="out">&nbsp;</div>
-      <div class="hi">✓ Agents scheduled (Tue–Fri 09:00).</div>
-      <div class="hi">✓ Wiki seeded from your research area.</div>
-      <div class="hi">✓ Daemon running in background.</div>
+      <div class="hi tr">✓ Ajanlar planlandı (Sal–Cum 09:00).</div>
+      <div class="hi en">✓ Agents scheduled (Tue–Fri 09:00).</div>
+      <div class="hi tr">✓ Wiki araştırma alanından tohumlandı.</div>
+      <div class="hi en">✓ Wiki seeded from your research area.</div>
+      <div class="hi tr">✓ Daemon arka planda çalışıyor.</div>
+      <div class="hi en">✓ Daemon running in background.</div>
       <div class="out">&nbsp;</div>
-      <div class="out">Drop any arXiv PDF into wiki/raw/papers/</div>
-      <div class="out">— or run /ingest to process immediately.</div>
+      <div class="out tr">Herhangi bir arXiv PDF'ini wiki/raw/papers/'a bırak</div>
+      <div class="out en">Drop any arXiv PDF into wiki/raw/papers/</div>
+      <div class="out tr">— ya da hemen işlemek için /ingest çalıştır.</div>
+      <div class="out en">— or run /ingest to process immediately.</div>
       <div class="out cursor">&nbsp;</div>
     </div>
     <div class="stack-row" style="margin-top:28px;">
       <div class="stack-item"><span>github.com/</span>drader/papervault</div>
       <div class="stack-item"><span>built on </span>memex</div>
-      <div class="stack-item"><span>TypeScript · </span>Claude API · MCP</div>
+      <div class="stack-item"><span>TypeScript · </span>any LLM · MCP</div>
     </div>
   </div>
 
@@ -339,9 +464,18 @@
 
 <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides"></span></div>
-<div class="nav-hint">← → arrow keys &nbsp;·&nbsp; space</div>
+<div class="nav-hint">
+  <span class="tr">← → ok tuşları &nbsp;·&nbsp; boşluk</span>
+  <span class="en">← → arrow keys &nbsp;·&nbsp; space</span>
+</div>
 
 <script>
+  function setLang(lang) {
+    document.documentElement.className = 'lang-' + lang;
+    document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  }
+
   const slides = document.querySelectorAll('.slide');
   const total = slides.length;
   let current = 0;

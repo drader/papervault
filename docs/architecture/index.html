@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html class="lang-tr" lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -423,6 +423,36 @@
   }
 
   .back-link:hover { color: var(--amber); }
+
+  /* ── Language switcher ─── */
+  .lang-tr .en { display: none; }
+  .lang-en .tr { display: none; }
+
+  .lang-switch {
+    position: fixed;
+    top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 500;
+    display: flex;
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .lang-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 4px 12px;
+    letter-spacing: 0.1em;
+    transition: color 0.15s;
+  }
+
+  .lang-btn:hover { color: var(--amber); }
+  .lang-btn.active { background: rgba(245,158,11,0.15); color: var(--amber); }
 </style>
 </head>
 <body>
@@ -432,20 +462,40 @@
   papervault
 </a>
 
+<div class="lang-switch">
+  <button class="lang-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
 <!-- ══════════════════════════════════════
      COVER
      ══════════════════════════════════════ -->
 <div class="cover">
-  <div class="cover-badge">Mimari Yolculuk</div>
+  <div class="cover-badge">
+    <span class="tr">Mimari Yolculuk</span>
+    <span class="en">Architectural Journey</span>
+  </div>
   <h1>Memex → Papervault</h1>
   <p class="subtitle">
-    Evrensel bir wiki altyapısı nasıl akademik paper bilgi tabanına dönüştürüldü —<br>
-    mimari kararlar, miras alınan katmanlar ve yeni bileşenler.
+    <span class="tr">Evrensel bir wiki altyapısı nasıl akademik paper bilgi tabanına dönüştürüldü —<br>mimari kararlar, miras alınan katmanlar ve yeni bileşenler.</span>
+    <span class="en">How a universal wiki infrastructure was transformed into an academic paper knowledge base —<br>architectural decisions, inherited layers, and new components.</span>
   </p>
   <div class="cover-meta">
-    <div>Temel <span>memex</span></div>
-    <div>Özelleşme <span>papervault</span></div>
-    <div>Yeni katman <span>fetcher · search</span></div>
+    <div>
+      <span class="tr">Temel</span>
+      <span class="en">Foundation</span>
+      &nbsp;<span>memex</span>
+    </div>
+    <div>
+      <span class="tr">Özelleşme</span>
+      <span class="en">Specialization</span>
+      &nbsp;<span>papervault</span>
+    </div>
+    <div>
+      <span class="tr">Yeni katman</span>
+      <span class="en">New layer</span>
+      &nbsp;<span>fetcher · search</span>
+    </div>
   </div>
 </div>
 
@@ -453,26 +503,40 @@
      PAGE 1 — memex temeli
      ══════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag blue">Temel Altyapı</div>
-  <h2>memex: Domain-agnostik wiki motoru</h2>
+  <div class="section-tag blue">
+    <span class="tr">Temel Altyapı</span>
+    <span class="en">Foundation Infrastructure</span>
+  </div>
+  <h2>
+    <span class="tr">memex: Domain-agnostik wiki motoru</span>
+    <span class="en">memex: Domain-agnostic wiki engine</span>
+  </h2>
   <p class="lead">
-    memex, her tür bilgi biriktirme projesinin üzerine inşa edilebileceği genel amaçlı bir altyapıdır.
-    Ham kaynak dosyasını alıp yapılandırılmış wiki sayfasına dönüştüren ajan döngüsünü tanımlar —
-    domain ne olursa olsun aynı mekanizma çalışır.
+    <span class="tr">memex, her tür bilgi biriktirme projesinin üzerine inşa edilebileceği genel amaçlı bir altyapıdır. Ham kaynak dosyasını alıp yapılandırılmış wiki sayfasına dönüştüren ajan döngüsünü tanımlar — domain ne olursa olsun aynı mekanizma çalışır.</span>
+    <span class="en">memex is a general-purpose infrastructure upon which any type of knowledge accumulation project can be built. It defines the agent loop that takes a raw source file and converts it into a structured wiki page — the same mechanism works regardless of the domain.</span>
   </p>
 
   <div style="margin-bottom: 6px;">
     <div class="layer-row">
-      <div class="layer-label">Giriş</div>
+      <div class="layer-label">
+        <span class="tr">Giriş</span>
+        <span class="en">Input</span>
+      </div>
       <div class="layer-content">
         <div class="files">
           <span class="chip chip-dim">wiki/raw/</span>
-          <span class="chip chip-dim">Salt okunur — asla değiştirilmez</span>
+          <span class="chip chip-dim">
+            <span class="tr">Salt okunur — asla değiştirilmez</span>
+            <span class="en">Read-only — never modified</span>
+          </span>
         </div>
       </div>
     </div>
     <div class="layer-row">
-      <div class="layer-label">İşleme</div>
+      <div class="layer-label">
+        <span class="tr">İşleme</span>
+        <span class="en">Processing</span>
+      </div>
       <div class="layer-content">
         <div class="files">
           <span class="chip chip-blue">runner/</span>
@@ -484,7 +548,10 @@
       </div>
     </div>
     <div class="layer-row">
-      <div class="layer-label">Bilgi</div>
+      <div class="layer-label">
+        <span class="tr">Bilgi</span>
+        <span class="en">Knowledge</span>
+      </div>
       <div class="layer-content">
         <div class="files">
           <span class="chip chip-amber">wiki/</span>
@@ -493,7 +560,10 @@
       </div>
     </div>
     <div class="layer-row">
-      <div class="layer-label">Süreç</div>
+      <div class="layer-label">
+        <span class="tr">Süreç</span>
+        <span class="en">Process</span>
+      </div>
       <div class="layer-content">
         <div class="files">
           <span class="chip chip-dim">agents/</span>
@@ -504,11 +574,14 @@
       </div>
     </div>
     <div class="layer-row">
-      <div class="layer-label">Arama</div>
+      <div class="layer-label">
+        <span class="tr">Arama</span>
+        <span class="en">Search</span>
+      </div>
       <div class="layer-content">
         <div class="files">
           <span class="chip chip-purple">MCP hybrid search</span>
-          <span class="chip chip-dim">BM25 + vektör + RRF</span>
+          <span class="chip chip-dim">BM25 + vector + RRF</span>
         </div>
       </div>
     </div>
@@ -516,24 +589,47 @@
 
   <div class="divider"></div>
 
-  <h3>Tier sistemi: bağlam yönetimi</h3>
+  <h3>
+    <span class="tr">Tier sistemi: bağlam yönetimi</span>
+    <span class="en">Tier system: context management</span>
+  </h3>
   <p style="color: var(--muted); font-size: 12px; margin-bottom: 16px;">
-    Her oturumda tüm wiki yüklenmez. Tier sistemi hangi dosyaların ne zaman bağlama gireceğini belirler.
+    <span class="tr">Her oturumda tüm wiki yüklenmez. Tier sistemi hangi dosyaların ne zaman bağlama gireceğini belirler.</span>
+    <span class="en">The full wiki is not loaded every session. The tier system determines which files enter context and when.</span>
   </p>
   <div class="solution-row">
-    <div class="sol-problem">Tier 1 — Her oturum</div>
+    <div class="sol-problem">
+      <span class="tr">Tier 1 — Her oturum</span>
+      <span class="en">Tier 1 — Every session</span>
+    </div>
     <div class="arrow-right">→</div>
-    <div class="sol-solution"><strong>memory/</strong>, <strong>scratch/</strong>, <strong>journal/</strong> (son 3 gün)</div>
+    <div class="sol-solution">
+      <strong>memory/</strong>, <strong>scratch/</strong>, <strong>journal/</strong>
+      (<span class="tr">son 3 gün</span><span class="en">last 3 days</span>)
+    </div>
   </div>
   <div class="solution-row">
-    <div class="sol-problem">Tier 2 — Alan aktifken</div>
+    <div class="sol-problem">
+      <span class="tr">Tier 2 — Alan aktifken</span>
+      <span class="en">Tier 2 — When domain is active</span>
+    </div>
     <div class="arrow-right">→</div>
-    <div class="sol-solution"><strong>wiki/index.md</strong>, aktif <strong>agents/*/AGENT.md + MEMORY.md</strong></div>
+    <div class="sol-solution">
+      <strong>wiki/index.md</strong>,
+      <span class="tr">aktif</span><span class="en">active</span>
+      <strong>agents/*/AGENT.md + MEMORY.md</strong>
+    </div>
   </div>
   <div class="solution-row">
-    <div class="sol-problem">Tier 3 — Sadece istenince</div>
+    <div class="sol-problem">
+      <span class="tr">Tier 3 — Sadece istenince</span>
+      <span class="en">Tier 3 — Only when requested</span>
+    </div>
     <div class="arrow-right">→</div>
-    <div class="sol-solution"><strong>wiki/archive/</strong>, <strong>outputs/</strong>, eski journal</div>
+    <div class="sol-solution">
+      <strong>wiki/archive/</strong>, <strong>outputs/</strong>,
+      <span class="tr">eski journal</span><span class="en">old journal</span>
+    </div>
   </div>
 </div>
 
@@ -541,38 +637,91 @@
      PAGE 2 — Akademik paper zorluğu
      ══════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag" style="background:rgba(248,81,73,0.08); border-color:rgba(248,81,73,0.3); color:var(--red);">Sorun Alanı</div>
-  <h2>Akademik paper neden farklı?</h2>
+  <div class="section-tag" style="background:rgba(248,81,73,0.08); border-color:rgba(248,81,73,0.3); color:var(--red);">
+    <span class="tr">Sorun Alanı</span>
+    <span class="en">Problem Domain</span>
+  </div>
+  <h2>
+    <span class="tr">Akademik paper neden farklı?</span>
+    <span class="en">Why is academic paper research different?</span>
+  </h2>
   <p class="lead">
-    Genel wiki motoru bir dosyayı işleyebilir — ama akademik paper araştırması bunu çok aşar.
-    PDF çeşitliliği, çok-kaynaklı keşif, atıf grafiği ve süreklilik gereksinimleri
-    memex'in temel tasarımının dışında kalıyordu.
+    <span class="tr">Genel wiki motoru bir dosyayı işleyebilir — ama akademik paper araştırması bunu çok aşar. PDF çeşitliliği, çok-kaynaklı keşif, atıf grafiği ve süreklilik gereksinimleri memex'in temel tasarımının dışında kalıyordu.</span>
+    <span class="en">A general wiki engine can process a file — but academic paper research goes far beyond that. PDF variety, multi-source discovery, citation graphs, and continuity requirements were outside memex's core design.</span>
   </p>
 
   <div class="problem-grid">
     <div class="problem-card p1">
-      <div class="problem-num">Sorun 01</div>
-      <h3>Kaynak çeşitliliği</h3>
-      <p>Aynı paper arXiv'de, PMC'de, DOI'de, kurumsal repoda farklı formatlarda (PDF, LaTeX, HTML, XML) bulunur. Tek kaynak yeterli değildir; kalite de değişir.</p>
-      <div class="problem-symptom">"arxiv.org 403 döndü, diğer kaynakları denemedim."</div>
+      <div class="problem-num">
+        <span class="tr">Sorun 01</span>
+        <span class="en">Problem 01</span>
+      </div>
+      <h3>
+        <span class="tr">Kaynak çeşitliliği</span>
+        <span class="en">Source variety</span>
+      </h3>
+      <p>
+        <span class="tr">Aynı paper arXiv'de, PMC'de, DOI'de, kurumsal repoda farklı formatlarda (PDF, LaTeX, HTML, XML) bulunur. Tek kaynak yeterli değildir; kalite de değişir.</span>
+        <span class="en">The same paper can be found on arXiv, PMC, DOI, or institutional repos in different formats (PDF, LaTeX, HTML, XML). A single source is not enough; quality also varies.</span>
+      </p>
+      <div class="problem-symptom">
+        <span class="tr">"arxiv.org 403 döndü, diğer kaynakları denemedim."</span>
+        <span class="en">"arxiv.org returned 403, I didn't try other sources."</span>
+      </div>
     </div>
     <div class="problem-card p2">
-      <div class="problem-num">Sorun 02</div>
-      <h3>Keşif döngüsü</h3>
-      <p>Yeni bir konuya başlarken hangi paper'ların okunmaya değer olduğunu bulmak için web araması, Google Scholar, arXiv browsing gerekir — hepsi ayrı ayrı.</p>
-      <div class="problem-symptom">"Hangi paper'lardan başlayayım bilmiyorum."</div>
+      <div class="problem-num">
+        <span class="tr">Sorun 02</span>
+        <span class="en">Problem 02</span>
+      </div>
+      <h3>
+        <span class="tr">Keşif döngüsü</span>
+        <span class="en">Discovery loop</span>
+      </h3>
+      <p>
+        <span class="tr">Yeni bir konuya başlarken hangi paper'ların okunmaya değer olduğunu bulmak için web araması, Google Scholar, arXiv browsing gerekir — hepsi ayrı ayrı.</span>
+        <span class="en">When starting a new topic, web search, Google Scholar, and arXiv browsing are all needed to find worthwhile papers — all separately.</span>
+      </p>
+      <div class="problem-symptom">
+        <span class="tr">"Hangi paper'lardan başlayayım bilmiyorum."</span>
+        <span class="en">"I don't know which papers to start with."</span>
+      </div>
     </div>
     <div class="problem-card p3">
-      <div class="problem-num">Sorun 03</div>
-      <h3>Atıf grafiği</h3>
-      <p>Paper A, yöntem B'yi kullanır; yöntem B, paper C'de tanımlanmıştır. Bu ilişki ancak ikisini de okuyunca görünür hale gelir.</p>
-      <div class="problem-symptom">"Bu yöntemi başka paper'larda da gördüm ama bağlantısı yok."</div>
+      <div class="problem-num">
+        <span class="tr">Sorun 03</span>
+        <span class="en">Problem 03</span>
+      </div>
+      <h3>
+        <span class="tr">Atıf grafiği</span>
+        <span class="en">Citation graph</span>
+      </h3>
+      <p>
+        <span class="tr">Paper A, yöntem B'yi kullanır; yöntem B, paper C'de tanımlanmıştır. Bu ilişki ancak ikisini de okuyunca görünür hale gelir.</span>
+        <span class="en">Paper A uses method B; method B is defined in paper C. This relationship only becomes visible when you read both.</span>
+      </p>
+      <div class="problem-symptom">
+        <span class="tr">"Bu yöntemi başka paper'larda da gördüm ama bağlantısı yok."</span>
+        <span class="en">"I've seen this method in other papers but there's no connection."</span>
+      </div>
     </div>
     <div class="problem-card p4">
-      <div class="problem-num">Sorun 04</div>
-      <h3>Tekrarlayan araştırma</h3>
-      <p>Haftalık yeni paper keşfi manuel ve düzensizdir. Bazı alanlar takip edilir, bazıları unutulur. Birikim olmaz.</p>
-      <div class="problem-symptom">"Geçen ay ne okudum, yeni ne çıktı hatırlamıyorum."</div>
+      <div class="problem-num">
+        <span class="tr">Sorun 04</span>
+        <span class="en">Problem 04</span>
+      </div>
+      <h3>
+        <span class="tr">Tekrarlayan araştırma</span>
+        <span class="en">Recurring research</span>
+      </h3>
+      <p>
+        <span class="tr">Haftalık yeni paper keşfi manuel ve düzensizdir. Bazı alanlar takip edilir, bazıları unutulur. Birikim olmaz.</span>
+        <span class="en">Weekly new paper discovery is manual and irregular. Some areas are tracked, others are forgotten. No accumulation happens.</span>
+      </p>
+      <div class="problem-symptom">
+        <span class="tr">"Geçen ay ne okudum, yeni ne çıktı hatırlamıyorum."</span>
+        <span class="en">"I don't remember what I read last month or what's new."</span>
+      </div>
     </div>
   </div>
 </div>
@@ -581,46 +730,79 @@
      PAGE 3 — papervault'un cevapları
      ══════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag green">Çözümler</div>
-  <h2>papervault: Her soruna bir katman</h2>
+  <div class="section-tag green">
+    <span class="tr">Çözümler</span>
+    <span class="en">Solutions</span>
+  </div>
+  <h2>
+    <span class="tr">papervault: Her soruna bir katman</span>
+    <span class="en">papervault: A layer for every problem</span>
+  </h2>
   <p class="lead">
-    Dört soruna dört mimari yanıt. Her biri memex'in temel iskeletine eklenen
-    yeni bir bileşen ya da mevcut bir katmanın domain-spesifik uyarlaması.
+    <span class="tr">Dört soruna dört mimari yanıt. Her biri memex'in temel iskeletine eklenen yeni bir bileşen ya da mevcut bir katmanın domain-spesifik uyarlaması.</span>
+    <span class="en">Four architectural answers to four problems. Each is either a new component added to memex's core skeleton or a domain-specific adaptation of an existing layer.</span>
   </p>
 
   <div class="solution-row">
-    <div class="sol-problem">Sorun 01 · Kaynak çeşitliliği</div>
+    <div class="sol-problem">
+      <span class="tr">Sorun 01 · Kaynak çeşitliliği</span>
+      <span class="en">Problem 01 · Source variety</span>
+    </div>
     <div class="arrow-right">→</div>
     <div class="sol-solution">
       <strong>src/fetcher/ cascade</strong><br>
-      <span style="color:var(--muted);">12 kaynak adaptörü sırayla denenir (arxiv-api → arxiv-src → pmc → openalex …). Her biri 5 parser formatı destekler. Kalite skoru 0–5 arası hesaplanır; eşik geçilince cascade durur. sources-config.json ile her adapter enable/disable edilir.</span>
+      <span style="color:var(--muted);">
+        <span class="tr">12 kaynak adaptörü sırayla denenir (arxiv-api → arxiv-src → pmc → openalex …). Her biri 5 parser formatı destekler. Kalite skoru 0–5 arası hesaplanır; eşik geçilince cascade durur. sources-config.json ile her adapter enable/disable edilir.</span>
+        <span class="en">12 source adapters are tried in sequence (arxiv-api → arxiv-src → pmc → openalex …). Each supports 5 parser formats. A quality score 0–5 is calculated; the cascade stops when the threshold is passed. Each adapter can be enabled/disabled via sources-config.json.</span>
+      </span>
     </div>
   </div>
 
   <div class="solution-row">
-    <div class="sol-problem">Sorun 02 · Keşif döngüsü</div>
+    <div class="sol-problem">
+      <span class="tr">Sorun 02 · Keşif döngüsü</span>
+      <span class="en">Problem 02 · Discovery loop</span>
+    </div>
     <div class="arrow-right">→</div>
     <div class="sol-solution">
-      <strong>src/search/ modülü</strong><br>
-      <span style="color:var(--muted);">Keyword listesini OpenAlex, arXiv, Semantic Scholar, PubMed, Crossref'e paralel gönderir. paper-search-mcp CLI kuruluysa 20+ kaynak otomatik devreye girer. Sonuçlar DOI/arXiv ID üzerinden tekilleştirilir.</span>
+      <strong>src/search/ </strong><span class="tr">modülü</span><span class="en">module</span><br>
+      <span style="color:var(--muted);">
+        <span class="tr">Keyword listesini OpenAlex, arXiv, Semantic Scholar, PubMed, Crossref'e paralel gönderir. paper-search-mcp CLI kuruluysa 20+ kaynak otomatik devreye girer. Sonuçlar DOI/arXiv ID üzerinden tekilleştirilir.</span>
+        <span class="en">Sends the keyword list to OpenAlex, arXiv, Semantic Scholar, PubMed, Crossref in parallel. If the paper-search-mcp CLI is installed, 20+ sources activate automatically. Results are deduplicated by DOI/arXiv ID.</span>
+      </span>
     </div>
   </div>
 
   <div class="solution-row">
-    <div class="sol-problem">Sorun 03 · Atıf grafiği</div>
+    <div class="sol-problem">
+      <span class="tr">Sorun 03 · Atıf grafiği</span>
+      <span class="en">Problem 03 · Citation graph</span>
+    </div>
     <div class="arrow-right">→</div>
     <div class="sol-solution">
-      <strong>Çift yönlü wiki linkleri</strong><br>
-      <span style="color:var(--muted);">Her /ingest, wiki/authors/, wiki/methods/, wiki/venues/ sayfalarını günceller veya oluşturur. Her sayfa kaynağına geri bağlanır. Sorgu: "Bu yöntemi hangi paper'lar kullanıyor?" → anında yanıt.</span>
+      <strong>
+        <span class="tr">Çift yönlü wiki linkleri</span>
+        <span class="en">Bidirectional wiki links</span>
+      </strong><br>
+      <span style="color:var(--muted);">
+        <span class="tr">Her /ingest, wiki/authors/, wiki/methods/, wiki/venues/ sayfalarını günceller veya oluşturur. Her sayfa kaynağına geri bağlanır. Sorgu: "Bu yöntemi hangi paper'lar kullanıyor?" → anında yanıt.</span>
+        <span class="en">Every /ingest updates or creates wiki/authors/, wiki/methods/, wiki/venues/ pages. Every page links back to its source. Query: "Which papers use this method?" → instant answer.</span>
+      </span>
     </div>
   </div>
 
   <div class="solution-row">
-    <div class="sol-problem">Sorun 04 · Tekrarlayan araştırma</div>
+    <div class="sol-problem">
+      <span class="tr">Sorun 04 · Tekrarlayan araştırma</span>
+      <span class="en">Problem 04 · Recurring research</span>
+    </div>
     <div class="arrow-right">→</div>
     <div class="sol-solution">
       <strong>research/{topic}/ + GitHub Actions</strong><br>
-      <span style="color:var(--muted);">Her konu için index.md (keyword listesi), candidates.md (☐→☑→✓ kuyruğu), log.md. GitHub Actions Salı–Cuma çalışır; src/research/ yeni adayları candidates.md'ye yazar ve commit atar.</span>
+      <span style="color:var(--muted);">
+        <span class="tr">Her konu için index.md (keyword listesi), candidates.md (☐→☑→✓ kuyruğu), log.md. GitHub Actions Salı–Cuma çalışır; src/research/ yeni adayları candidates.md'ye yazar ve commit atar.</span>
+        <span class="en">Per topic: index.md (keyword list), candidates.md (☐→☑→✓ queue), log.md. GitHub Actions runs Tue–Fri; src/research/ writes new candidates to candidates.md and commits.</span>
+      </span>
     </div>
   </div>
 </div>
@@ -630,79 +812,148 @@
      ══════════════════════════════════════ -->
 <div class="page">
   <div class="section-tag">Pipeline</div>
-  <h2>Uçtan uca akış</h2>
+  <h2>
+    <span class="tr">Uçtan uca akış</span>
+    <span class="en">End-to-end flow</span>
+  </h2>
   <p class="lead">
-    Bir arXiv ID'sinin wiki sayfasına dönüşme yolculuğu — manuel tetikleme veya tam otomasyon.
+    <span class="tr">Bir arXiv ID'sinin wiki sayfasına dönüşme yolculuğu — manuel tetikleme veya tam otomasyon.</span>
+    <span class="en">The journey from an arXiv ID to a wiki page — manual trigger or full automation.</span>
   </p>
 
   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
 
     <div>
-      <h3 style="font-size:13px; color:var(--muted); font-weight:500; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">Manuel akış</h3>
+      <h3 style="font-size:13px; color:var(--muted); font-weight:500; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">
+        <span class="tr">Manuel akış</span>
+        <span class="en">Manual flow</span>
+      </h3>
       <div class="pipeline">
         <div class="pipe-step highlight">
-          <div class="pipe-label">Başlangıç</div>
+          <div class="pipe-label">
+            <span class="tr">Başlangıç</span>
+            <span class="en">Start</span>
+          </div>
           <div class="pipe-title">arXiv ID · DOI · URL</div>
-          <div class="pipe-detail">Kullanıcı candidates.md'den seçer</div>
+          <div class="pipe-detail">
+            <span class="tr">Kullanıcı candidates.md'den seçer</span>
+            <span class="en">User selects from candidates.md</span>
+          </div>
         </div>
         <div class="pipe-arrow">↓</div>
         <div class="pipe-step highlight">
           <div class="pipe-label">Fetch · src/fetcher/</div>
-          <div class="pipe-title">Cascade: 12 kaynak × 5 format</div>
-          <div class="pipe-detail">Kalite skoru ≥ eşik → cascade durur</div>
+          <div class="pipe-title">
+            Cascade: 12
+            <span class="tr">kaynak</span><span class="en">sources</span>
+            × 5
+            <span class="tr">format</span><span class="en">formats</span>
+          </div>
+          <div class="pipe-detail">
+            <span class="tr">Kalite skoru ≥ eşik → cascade durur</span>
+            <span class="en">Quality score ≥ threshold → cascade stops</span>
+          </div>
         </div>
         <div class="pipe-arrow">↓</div>
         <div class="pipe-step">
-          <div class="pipe-label">Ham depo (salt okunur)</div>
+          <div class="pipe-label">
+            <span class="tr">Ham depo (salt okunur)</span>
+            <span class="en">Raw storage (read-only)</span>
+          </div>
           <div class="pipe-title">wiki/raw/papers/{slug}.md</div>
           <div class="pipe-detail">frontmatter + abstract + full text</div>
         </div>
         <div class="pipe-arrow">↓ /ingest</div>
         <div class="pipe-step highlight">
-          <div class="pipe-label">Araştırmacı ajan</div>
+          <div class="pipe-label">
+            <span class="tr">Araştırmacı ajan</span>
+            <span class="en">Researcher agent</span>
+          </div>
           <div class="pipe-title">wiki/papers/YYYY-{slug}.md</div>
           <div class="pipe-detail">Problem · Contributions · Methods · Results · Limitations</div>
         </div>
         <div class="pipe-arrow">↓</div>
         <div class="pipe-step">
-          <div class="pipe-label">Bağlantılı sayfalar</div>
+          <div class="pipe-label">
+            <span class="tr">Bağlantılı sayfalar</span>
+            <span class="en">Linked pages</span>
+          </div>
           <div class="pipe-title">authors/ · methods/ · venues/ · concepts/</div>
-          <div class="pipe-detail">Yeni sayfa oluşturulur veya güncellenir</div>
+          <div class="pipe-detail">
+            <span class="tr">Yeni sayfa oluşturulur veya güncellenir</span>
+            <span class="en">New page created or updated</span>
+          </div>
         </div>
       </div>
     </div>
 
     <div>
-      <h3 style="font-size:13px; color:var(--muted); font-weight:500; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">Otomatik keşif akışı</h3>
+      <h3 style="font-size:13px; color:var(--muted); font-weight:500; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">
+        <span class="tr">Otomatik keşif akışı</span>
+        <span class="en">Automatic discovery flow</span>
+      </h3>
       <div class="pipeline">
         <div class="pipe-step">
-          <div class="pipe-label">Tetikleyici</div>
-          <div class="pipe-title">GitHub Actions (Salı–Cuma)</div>
-          <div class="pipe-detail">Daemon: Sal–Per araştırmacı, Pzt orkeströr</div>
+          <div class="pipe-label">
+            <span class="tr">Tetikleyici</span>
+            <span class="en">Trigger</span>
+          </div>
+          <div class="pipe-title">
+            GitHub Actions (<span class="tr">Salı–Cuma</span><span class="en">Tue–Fri</span>)
+          </div>
+          <div class="pipe-detail">
+            <span class="tr">Daemon: Sal–Per araştırmacı, Pzt orkeströr</span>
+            <span class="en">Daemon: Tue–Thu researcher, Mon orchestrator</span>
+          </div>
         </div>
         <div class="pipe-arrow">↓</div>
         <div class="pipe-step">
-          <div class="pipe-label">Girdi</div>
+          <div class="pipe-label">
+            <span class="tr">Girdi</span>
+            <span class="en">Input</span>
+          </div>
           <div class="pipe-title">research/{topic}/index.md</div>
-          <div class="pipe-detail">search_keywords listesi okunur</div>
+          <div class="pipe-detail">
+            <span class="tr">search_keywords listesi okunur</span>
+            <span class="en">search_keywords list is read</span>
+          </div>
         </div>
         <div class="pipe-arrow">↓</div>
         <div class="pipe-step highlight">
-          <div class="pipe-label">Arama · src/search/</div>
-          <div class="pipe-title">5 kaynak paralel · dedup</div>
-          <div class="pipe-detail">paper-search-mcp varsa 20+ kaynak</div>
+          <div class="pipe-label">
+            <span class="tr">Arama · src/search/</span>
+            <span class="en">Search · src/search/</span>
+          </div>
+          <div class="pipe-title">
+            5
+            <span class="tr">kaynak paralel</span><span class="en">sources parallel</span>
+            · dedup
+          </div>
+          <div class="pipe-detail">
+            <span class="tr">paper-search-mcp varsa 20+ kaynak</span>
+            <span class="en">20+ sources if paper-search-mcp installed</span>
+          </div>
         </div>
         <div class="pipe-arrow">↓</div>
         <div class="pipe-step">
           <div class="pipe-label">LLM</div>
-          <div class="pipe-title">claude-haiku → JSON</div>
-          <div class="pipe-detail">new_candidates satırları üretilir</div>
+          <div class="pipe-title">LLM (anthropic · openai · …) → JSON</div>
+          <div class="pipe-detail">
+            <span class="tr">new_candidates satırları üretilir</span>
+            <span class="en">new_candidates rows are generated</span>
+          </div>
         </div>
         <div class="pipe-arrow">↓</div>
         <div class="pipe-step highlight">
-          <div class="pipe-label">Çıktı</div>
+          <div class="pipe-label">
+            <span class="tr">Çıktı</span>
+            <span class="en">Output</span>
+          </div>
           <div class="pipe-title">research/{topic}/candidates.md</div>
-          <div class="pipe-detail">Git commit + push otomatik</div>
+          <div class="pipe-detail">
+            <span class="tr">Git commit + push otomatik</span>
+            <span class="en">Git commit + push automatic</span>
+          </div>
         </div>
       </div>
     </div>
@@ -714,89 +965,205 @@
      PAGE 5 — Miras zinciri
      ══════════════════════════════════════ -->
 <div class="page">
-  <div class="section-tag purple">Miras Zinciri</div>
-  <h2>memex'ten ne kaldı, ne değişti</h2>
+  <div class="section-tag purple">
+    <span class="tr">Miras Zinciri</span>
+    <span class="en">Inheritance Chain</span>
+  </div>
+  <h2>
+    <span class="tr">memex'ten ne kaldı, ne değişti</span>
+    <span class="en">What was inherited, what changed</span>
+  </h2>
   <p class="lead">
-    papervault, memex'ten doğrudan türemiştir. Altyapının büyük bölümü değişmeden miras alınmıştır;
-    domain-spesifik bileşenler sıfırdan yazılmış ya da uyarlanmıştır.
+    <span class="tr">papervault, memex'ten doğrudan türemiştir. Altyapının büyük bölümü değişmeden miras alınmıştır; domain-spesifik bileşenler sıfırdan yazılmış ya da uyarlanmıştır.</span>
+    <span class="en">papervault derives directly from memex. The bulk of the infrastructure is inherited unchanged; domain-specific components were written from scratch or adapted.</span>
   </p>
 
   <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px;">
     <table class="inherit-table">
       <thead>
         <tr>
-          <th>Bileşen</th>
-          <th>Durum</th>
-          <th>memex'te</th>
-          <th>papervault'ta</th>
+          <th>
+            <span class="tr">Bileşen</span>
+            <span class="en">Component</span>
+          </th>
+          <th>
+            <span class="tr">Durum</span>
+            <span class="en">Status</span>
+          </th>
+          <th>
+            <span class="tr">memex'te</span>
+            <span class="en">In memex</span>
+          </th>
+          <th>
+            <span class="tr">papervault'ta</span>
+            <span class="en">In papervault</span>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>wiki/ katmanı</td>
-          <td><span class="badge badge-amber">Uyarlandı</span></td>
-          <td style="color:var(--muted); font-size:12px;">Domain-agnostik</td>
+          <td>wiki/ <span class="tr">katmanı</span><span class="en">layer</span></td>
+          <td>
+            <span class="badge badge-amber tr">Uyarlandı</span>
+            <span class="badge badge-amber en">Adapted</span>
+          </td>
+          <td style="color:var(--muted); font-size:12px;">
+            <span class="tr">Domain-agnostik</span>
+            <span class="en">Domain-agnostic</span>
+          </td>
           <td style="font-size:12px;">papers · authors · methods · concepts · venues</td>
         </tr>
         <tr>
           <td>runner/ · locker/ · validator/</td>
-          <td><span class="badge badge-green">Miras</span></td>
-          <td style="color:var(--muted); font-size:12px;">Genel wiki yazma motoru</td>
-          <td style="font-size:12px;">Değişmedi</td>
+          <td>
+            <span class="badge badge-green tr">Miras</span>
+            <span class="badge badge-green en">Inherited</span>
+          </td>
+          <td style="color:var(--muted); font-size:12px;">
+            <span class="tr">Genel wiki yazma motoru</span>
+            <span class="en">General wiki writing engine</span>
+          </td>
+          <td style="font-size:12px;">
+            <span class="tr">Değişmedi</span>
+            <span class="en">Unchanged</span>
+          </td>
         </tr>
         <tr>
           <td>scheduler/ · budget/</td>
-          <td><span class="badge badge-green">Miras</span></td>
-          <td style="color:var(--muted); font-size:12px;">HEARTBEAT.md periyodik tetikleme</td>
-          <td style="font-size:12px;">Değişmedi</td>
+          <td>
+            <span class="badge badge-green tr">Miras</span>
+            <span class="badge badge-green en">Inherited</span>
+          </td>
+          <td style="color:var(--muted); font-size:12px;">
+            <span class="tr">HEARTBEAT.md periyodik tetikleme</span>
+            <span class="en">HEARTBEAT.md periodic trigger</span>
+          </td>
+          <td style="font-size:12px;">
+            <span class="tr">Değişmedi</span>
+            <span class="en">Unchanged</span>
+          </td>
         </tr>
         <tr>
           <td>consolidator/</td>
-          <td><span class="badge badge-green">Miras</span></td>
-          <td style="color:var(--muted); font-size:12px;">MEMORY.md → wiki/syntheses/ köprüsü</td>
-          <td style="font-size:12px;">Değişmedi</td>
+          <td>
+            <span class="badge badge-green tr">Miras</span>
+            <span class="badge badge-green en">Inherited</span>
+          </td>
+          <td style="color:var(--muted); font-size:12px;">
+            <span class="tr">MEMORY.md → wiki/syntheses/ köprüsü</span>
+            <span class="en">MEMORY.md → wiki/syntheses/ bridge</span>
+          </td>
+          <td style="font-size:12px;">
+            <span class="tr">Değişmedi</span>
+            <span class="en">Unchanged</span>
+          </td>
         </tr>
         <tr>
           <td>agents/ (orchestrator + researcher)</td>
-          <td><span class="badge badge-amber">Uyarlandı</span></td>
-          <td style="color:var(--muted); font-size:12px;">Genel ingest + haftalık sentez</td>
-          <td style="font-size:12px;">Paper-spesifik AGENT.md talimatları</td>
+          <td>
+            <span class="badge badge-amber tr">Uyarlandı</span>
+            <span class="badge badge-amber en">Adapted</span>
+          </td>
+          <td style="color:var(--muted); font-size:12px;">
+            <span class="tr">Genel ingest + haftalık sentez</span>
+            <span class="en">General ingest + weekly synthesis</span>
+          </td>
+          <td style="font-size:12px;">
+            <span class="tr">Paper-spesifik AGENT.md talimatları</span>
+            <span class="en">Paper-specific AGENT.md instructions</span>
+          </td>
         </tr>
         <tr>
           <td>MCP hybrid search</td>
-          <td><span class="badge badge-green">Miras</span></td>
-          <td style="color:var(--muted); font-size:12px;">BM25 + vektör + RRF</td>
-          <td style="font-size:12px;">Değişmedi</td>
+          <td>
+            <span class="badge badge-green tr">Miras</span>
+            <span class="badge badge-green en">Inherited</span>
+          </td>
+          <td style="color:var(--muted); font-size:12px;">BM25 + vector + RRF</td>
+          <td style="font-size:12px;">
+            <span class="tr">Değişmedi</span>
+            <span class="en">Unchanged</span>
+          </td>
         </tr>
         <tr>
-          <td>Tier sistemi</td>
-          <td><span class="badge badge-green">Miras</span></td>
-          <td style="color:var(--muted); font-size:12px;">Tier 1/2/3 bağlam yönetimi</td>
-          <td style="font-size:12px;">Değişmedi</td>
+          <td>
+            <span class="tr">Tier sistemi</span>
+            <span class="en">Tier system</span>
+          </td>
+          <td>
+            <span class="badge badge-green tr">Miras</span>
+            <span class="badge badge-green en">Inherited</span>
+          </td>
+          <td style="color:var(--muted); font-size:12px;">
+            <span class="tr">Tier 1/2/3 bağlam yönetimi</span>
+            <span class="en">Tier 1/2/3 context management</span>
+          </td>
+          <td style="font-size:12px;">
+            <span class="tr">Değişmedi</span>
+            <span class="en">Unchanged</span>
+          </td>
         </tr>
         <tr>
           <td>src/fetcher/</td>
-          <td><span class="badge badge-blue">Yeni</span></td>
+          <td>
+            <span class="badge badge-blue tr">Yeni</span>
+            <span class="badge badge-blue en">New</span>
+          </td>
           <td style="color:var(--muted); font-size:12px;">—</td>
-          <td style="font-size:12px;">12 adapter · 5 parser · kalite cascade</td>
+          <td style="font-size:12px;">
+            12 adapter · 5 parser ·
+            <span class="tr">kalite cascade</span>
+            <span class="en">quality cascade</span>
+          </td>
         </tr>
         <tr>
           <td>src/search/</td>
-          <td><span class="badge badge-blue">Yeni</span></td>
+          <td>
+            <span class="badge badge-blue tr">Yeni</span>
+            <span class="badge badge-blue en">New</span>
+          </td>
           <td style="color:var(--muted); font-size:12px;">—</td>
-          <td style="font-size:12px;">5 kaynak + paper-search-mcp opsiyonel</td>
+          <td style="font-size:12px;">
+            5
+            <span class="tr">kaynak</span><span class="en">sources</span>
+            + paper-search-mcp
+            <span class="tr">opsiyonel</span><span class="en">optional</span>
+          </td>
         </tr>
         <tr>
           <td>research/{topic}/</td>
-          <td><span class="badge badge-amber">Uyarlandı</span></td>
-          <td style="color:var(--muted); font-size:12px;">podcasts.md (URL kuyruğu)</td>
-          <td style="font-size:12px;">candidates.md (arXiv ID / DOI kuyruğu)</td>
+          <td>
+            <span class="badge badge-amber tr">Uyarlandı</span>
+            <span class="badge badge-amber en">Adapted</span>
+          </td>
+          <td style="color:var(--muted); font-size:12px;">
+            podcasts.md (
+            <span class="tr">URL kuyruğu</span>
+            <span class="en">URL queue</span>
+            )
+          </td>
+          <td style="font-size:12px;">
+            candidates.md (arXiv ID / DOI
+            <span class="tr">kuyruğu</span>
+            <span class="en">queue</span>
+            )
+          </td>
         </tr>
         <tr>
-          <td>LLM paketi</td>
-          <td><span class="badge badge-green">Miras</span></td>
+          <td>
+            <span class="tr">LLM paketi</span>
+            <span class="en">LLM package</span>
+          </td>
+          <td>
+            <span class="badge badge-green tr">Miras</span>
+            <span class="badge badge-green en">Inherited</span>
+          </td>
           <td style="color:var(--muted); font-size:12px;">@ai-sdk/* (multi-provider)</td>
-          <td style="font-size:12px;">Aynı — anthropic · openai · google · deepseek · llama · grok</td>
+          <td style="font-size:12px;">
+            <span class="tr">Aynı</span>
+            <span class="en">Same</span>
+            — anthropic · openai · google · deepseek · llama · grok
+          </td>
         </tr>
       </tbody>
     </table>
@@ -805,18 +1172,34 @@
   <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 24px;">
     <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
       <div style="font-size: 28px; font-weight: 700; color: var(--green); font-family: 'JetBrains Mono', monospace;">7</div>
-      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Değişmeden miras alınan<br>bileşen</div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">
+        <span class="tr">Değişmeden miras alınan<br>bileşen</span>
+        <span class="en">Inherited<br>unchanged</span>
+      </div>
     </div>
     <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
       <div style="font-size: 28px; font-weight: 700; color: var(--amber); font-family: 'JetBrains Mono', monospace;">3</div>
-      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Domain'e uyarlanan<br>bileşen</div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">
+        <span class="tr">Domain'e uyarlanan<br>bileşen</span>
+        <span class="en">Domain-<br>adapted</span>
+      </div>
     </div>
     <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
       <div style="font-size: 28px; font-weight: 700; color: var(--blue); font-family: 'JetBrains Mono', monospace;">2</div>
-      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Sıfırdan yazılan<br>yeni bileşen</div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">
+        <span class="tr">Sıfırdan yazılan<br>yeni bileşen</span>
+        <span class="en">Written<br>from scratch</span>
+      </div>
     </div>
   </div>
 </div>
 
+<script>
+  function setLang(lang) {
+    document.documentElement.className = 'lang-' + lang;
+    document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  }
+</script>
 </body>
 </html>
