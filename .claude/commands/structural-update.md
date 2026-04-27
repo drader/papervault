@@ -1,0 +1,1 @@
+../../commands/structural-update.md
