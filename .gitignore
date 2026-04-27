@@ -1,6 +1,10 @@
 node_modules/
 dist/
 .env
+sources-config.json
 logs/*.log
 wiki/.search.db
 outputs/reports/lint-report.md
+scratch/vault_compare.html
+.obsidian/workspace.json
+.obsidian/graph.json

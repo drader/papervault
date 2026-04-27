@@ -5,7 +5,8 @@
 | Tür | Kural | Örnek |
 |---|---|---|
 | Wiki sayfaları | kebab-case | `hook-engagement.md` |
-| Source özeti | `YYYY-MM-DD-slug.md` | `2026-04-19-llm-memory-paper.md` |
+| Sources | `YYYY-MM-slug.md` | `2026-04-goodfellow-dl-ch9.md` |
+| Decisions | `YYYY-MM-slug.md` | `2026-04-attention-scope.md` |
 | Journal girdisi | `YYYY-MM-DD.md` | `2026-04-19.md` |
 | Çıktılar | `YYYY-MM-DD_description.md` | `2026-04-19_lint-report.md` |
 | Agent skills | BÜYÜK_HARF.md | `WIKI_QUERY.md` |
@@ -18,7 +19,7 @@ Her wiki sayfası bu yapıyı izler:
 ---
 title: Sayfa Başlığı
 tags: [kavram, araştırma]
-source: sources/2026-04-19-makale.md
+source: raw/papers/slug.md
 date: 2026-04-19
 status: active   # active | stale | archived
 ---
@@ -31,12 +32,70 @@ status: active   # active | stale | archived
 Kaynak A şunu derken, Kaynak B bunu diyor. Çözülmedi.
 
 ## Sources
-- [[sources/2026-04-19-makale]]
+- [[papers/2026-paper-slug]]
 
 ## Related
 - [[concepts/ilgili-kavram]]
 - [[entities/ilgili-entity]]
 ```
+
+## Sources Sayfa Formatı
+
+Paper olmayan referanslar için — ders kitabı bölümü, blog yazısı, dokümantasyon, standart.
+
+```markdown
+---
+title: Kaynak başlığı
+type: source
+kind: textbook | blog | documentation | standard | survey
+date: YYYY-MM-DD
+status: active
+url: https://...   # varsa
+---
+
+# Başlık
+
+Kısa özet — bu kaynaktan ne öğrendik, hangi wiki sayfalarını besliyor?
+
+## İlgili Wiki Sayfaları
+- [[concepts/...]]
+- [[methods/...]]
+```
+
+> `wiki/raw/papers/` — fetcher'ın çektiği ham paper içeriği (otomatik)
+> `wiki/sources/` — paper olmayan kaynakların manuel notları
+
+## Decisions Sayfa Formatı
+
+```markdown
+---
+title: Karar başlığı
+type: decision
+date: YYYY-MM-DD
+status: active   # active | revised | superseded
+superseded_by:   # varsa yeni karar dosyası
+---
+
+# Karar: ...
+
+## Bağlam
+Neden bu karar gerekti?
+
+## Karar
+Ne yapılmasına karar verildi?
+
+## Gerekçe
+Kanıtlar ve argümanlar. [[papers/...]] linkleri buraya.
+
+## Dışarıda Bırakılanlar
+Neden alternatifler reddedildi?
+
+## Sonuçlar
+Bu karar neleri etkiliyor?
+```
+
+> `memory/decisions.md` — ne karar verildi (anlık referans, Tier 1)
+> `wiki/decisions/` — neden ve hangi kanıtla (tam gerekçe, çapraz bağlantılı, Tier 3)
 
 ## Log Formatı
 

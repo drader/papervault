@@ -9,15 +9,28 @@
     "build": "tsc",
     "setup": "bash scripts/setup.sh",
     "install-daemon": "bash scripts/install.sh",
-    "check-deps": "obsidian-hybrid-search --version 2>/dev/null || echo 'obsidian-hybrid-search not installed. Run: npm install -g obsidian-hybrid-search'"
+    "check-deps": "obsidian-hybrid-search --version 2>/dev/null || echo 'obsidian-hybrid-search not installed. Run: npm install -g obsidian-hybrid-search'",
+    "fetch": "tsx src/fetcher/cli.ts",
+    "research": "tsx src/research/index.ts"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.0",
+    "@ai-sdk/google": "^1.0.0",
+    "@ai-sdk/openai": "^1.0.0",
+    "@ai-sdk/xai": "^1.0.0",
+    "ai": "^4.0.0",
+    "fast-xml-parser": "^4.3.6",
     "gray-matter": "^4.0.3",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "node-html-parser": "^6.1.13",
+    "pdf-parse": "^1.1.1",
+    "tar": "^7.4.3"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/node-cron": "^3.0.11",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/tar": "^6.1.13",
     "tsx": "^4.7.0",
     "typescript": "^5.4.0"
   },

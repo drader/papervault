@@ -19,7 +19,7 @@ MCP Server                  →  obsidian-hybrid-search (semantic search over wi
 | Layer | Location | Content | Written by |
 |---|---|---|---|
 | Process memory | `agents/*/MEMORY.md` | Reading patterns, recurring themes, hypotheses | Each agent |
-| Domain knowledge | `wiki/` | Papers, authors, methods, concepts, venues | Agents via locker |
+| Domain knowledge | `wiki/` | Papers, authors, methods, concepts, venues, entities | Agents via locker |
 
 The weekly consolidator bridges process memory → domain knowledge automatically.
 
@@ -35,6 +35,8 @@ The weekly consolidator bridges process memory → domain knowledge automaticall
 - **QUERY**  — Ask a research question, get a wiki-backed answer (`/query`)
 - **LINT**   — Wiki health check: orphan pages, missing sources, broken links (`/lint`)
 - **CONSOLIDATE** — MEMORY.md → wiki bridge (orchestrator, weekly)
+- **FETCH** — arXiv ID / DOI / URL → `wiki/raw/papers/` (`/fetch-paper`)
+- **NEW-RESEARCH** — Yeni araştırma konusu başlat, paper keşfet, candidates.md oluştur (`/new-research`)
 
 ## Hard Rules
 
@@ -62,7 +64,10 @@ wiki/              research knowledge base
   methods/         specific algorithms and techniques
   concepts/        higher-level research area concepts
   venues/          conferences and journals (NeurIPS, ICML, etc.)
+  entities/        research groups, labs, datasets, software tools
+  sources/         non-paper references: textbooks, blog posts, documentation, standards
   syntheses/       literature reviews and cross-paper comparisons
+  decisions/       research methodology decisions with full rationale and evidence
 agents/            agent definitions and process memories
 memory/            system-wide Tier 1 state
 scratch/           papers to read, open questions
@@ -70,4 +75,6 @@ journal/           cross-agent signal channel
 commands/          slash command prompt templates
 scripts/           setup and management scripts
 outputs/           reading lists, weekly reports
+research/          per-topic research folders
+  {slug}/          index.md, candidates.md, log.md
 ```

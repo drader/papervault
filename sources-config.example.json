@@ -1,0 +1,21 @@
+{
+  "sources": {
+    "arxiv-src":        { "enabled": true },
+    "arxiv-html":       { "enabled": true },
+    "arxiv-pdf":        { "enabled": true },
+    "arxiv-api":        { "enabled": true },
+    "pmc":              { "enabled": true },
+    "europepmc":        { "enabled": true },
+    "unpaywall":        { "enabled": true, "email": "your@email.com" },
+    "openalex":         { "enabled": true },
+    "core":             { "enabled": false, "apiKey": "" },
+    "zenodo":           { "enabled": true },
+    "acl":              { "enabled": true },
+    "semantic-scholar": { "enabled": true }
+  },
+  "cascade": {
+    "qualityThreshold": 3,
+    "timeoutMs": 15000,
+    "stopAtFirstAboveThreshold": true
+  }
+}

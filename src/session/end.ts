@@ -1,4 +1,4 @@
-import { appendFileSync, readFileSync, writeFileSync, existsSync } from 'fs'
+import { appendFileSync, readFileSync, readdirSync, statSync, writeFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
 const ROOT = process.cwd()
@@ -25,7 +25,6 @@ export function checkWikilinks(): string[] {
 
   // Basic check: find [[link]] patterns and verify file existence
   const scanDir = (dir: string) => {
-    const { readdirSync, statSync } = require('fs')
     for (const entry of readdirSync(dir)) {
       const fullPath = join(dir, entry)
       if (statSync(fullPath).isDirectory()) { scanDir(fullPath); continue }

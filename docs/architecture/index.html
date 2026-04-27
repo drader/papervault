@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memex → Papervault: Mimari Yolculuk</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:       #0c0a06;
+    --surface:  #131008;
+    --surface2: #1a1509;
+    --border:   #2e2810;
+    --text:     #d4cbb8;
+    --muted:    #6b5f42;
+    --amber:    #f59e0b;
+    --amber-dim:#d97706;
+    --amber-glow: rgba(245,158,11,0.12);
+    --green:    #56d364;
+    --blue:     #79c0ff;
+    --purple:   #bc8cff;
+    --red:      #f85149;
+    --yellow:   #e3b341;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ── Cover ─────────────────────────────── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #0c0a06 0%, #131008 50%, #0c0a06 100%);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: rgba(245,158,11,0.15);
+    border: 1px solid var(--amber-dim);
+    color: var(--amber);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #d4cbb8, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .cover-meta span { color: var(--amber); }
+
+  /* ── Page layout ─────────────────────── */
+  .page {
+    padding: 48px 56px;
+    max-width: 900px;
+    margin: 0 auto;
+    page-break-after: always;
+  }
+
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── Section headers ─────────────────── */
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.25);
+    color: var(--amber);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .section-tag.blue {
+    background: rgba(121,192,255,0.08);
+    border-color: rgba(121,192,255,0.25);
+    color: var(--blue);
+  }
+
+  .section-tag.green {
+    background: rgba(86,211,100,0.08);
+    border-color: rgba(86,211,100,0.25);
+    color: var(--green);
+  }
+
+  .section-tag.purple {
+    background: rgba(188,140,255,0.08);
+    border-color: rgba(188,140,255,0.25);
+    color: var(--purple);
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .lead {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    max-width: 680px;
+    line-height: 1.7;
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 32px 0; }
+
+  /* ── Problem Cards ────────────────────── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .problem-card.p1::before { background: var(--red); }
+  .problem-card.p2::before { background: var(--yellow); }
+  .problem-card.p3::before { background: var(--amber); }
+  .problem-card.p4::before { background: var(--purple); }
+
+  .problem-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .p1 .problem-num { color: var(--red); }
+  .p2 .problem-num { color: var(--yellow); }
+  .p3 .problem-num { color: var(--amber); }
+  .p4 .problem-num { color: var(--purple); }
+
+  .problem-card h3 { font-size: 15px; margin-bottom: 8px; }
+
+  .problem-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .problem-symptom {
+    background: var(--surface2);
+    border-left: 3px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 0 4px 4px 0;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── Solution rows ────────────────────── */
+  .solution-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+
+  .sol-problem {
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 200px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .arrow-right { color: var(--amber); font-size: 14px; flex-shrink: 0; padding-top: 2px; }
+
+  .sol-solution { font-size: 12px; color: var(--text); }
+  .sol-solution strong { color: var(--amber); }
+
+  /* ── Arch layers ─────────────────────── */
+  .layer-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0;
+    margin-bottom: 2px;
+  }
+
+  .layer-label {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    padding: 14px 16px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: flex;
+    align-items: center;
+  }
+
+  .layer-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    font-size: 12px;
+  }
+
+  .layer-content .files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+
+  .chip-amber  { color: var(--amber);  border-color: var(--amber-dim);  background: rgba(245,158,11,0.08); }
+  .chip-green  { color: var(--green);  border-color: rgba(86,211,100,0.4); background: rgba(86,211,100,0.06); }
+  .chip-blue   { color: var(--blue);   border-color: rgba(121,192,255,0.4); background: rgba(121,192,255,0.06); }
+  .chip-purple { color: var(--purple); border-color: rgba(188,140,255,0.4); background: rgba(188,140,255,0.06); }
+  .chip-dim    { color: var(--muted);  border-color: var(--border); background: var(--surface2); }
+  .chip-new    { color: var(--green);  border-color: rgba(86,211,100,0.4); background: rgba(86,211,100,0.06); font-weight: 600; }
+
+  /* ── Inheritance table ───────────────── */
+  .inherit-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .inherit-table th {
+    color: var(--muted);
+    font-weight: 500;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--surface2);
+  }
+
+  .inherit-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid rgba(46,40,16,0.5);
+    vertical-align: top;
+  }
+
+  .inherit-table tr:last-child td { border-bottom: none; }
+
+  .inherit-table td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--amber);
+    white-space: nowrap;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .badge-green  { background: rgba(86,211,100,0.15);  color: var(--green);  border: 1px solid rgba(86,211,100,0.3); }
+  .badge-amber  { background: rgba(245,158,11,0.15);  color: var(--amber);  border: 1px solid var(--amber-dim); }
+  .badge-blue   { background: rgba(121,192,255,0.1);  color: var(--blue);   border: 1px solid rgba(121,192,255,0.3); }
+  .badge-purple { background: rgba(188,140,255,0.1);  color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+  .badge-dim    { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ── Pipeline flow ───────────────────── */
+  .pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 640px;
+  }
+
+  .pipe-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+
+  .pipe-step.highlight { border-color: var(--amber-dim); box-shadow: 0 0 12px rgba(245,158,11,0.08); }
+
+  .pipe-label {
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .pipe-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .pipe-detail {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .pipe-arrow {
+    text-align: center;
+    color: var(--border);
+    font-size: 16px;
+    line-height: 1;
+    margin: 0;
+  }
+
+  /* ── Nav ─────────────────────────────── */
+  .back-link {
+    position: fixed;
+    top: 16px; left: 24px;
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .back-link:hover { color: var(--amber); }
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-link">
+  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+  papervault
+</a>
+
+<!-- ══════════════════════════════════════
+     COVER
+     ══════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Mimari Yolculuk</div>
+  <h1>Memex → Papervault</h1>
+  <p class="subtitle">
+    Evrensel bir wiki altyapısı nasıl akademik paper bilgi tabanına dönüştürüldü —<br>
+    mimari kararlar, miras alınan katmanlar ve yeni bileşenler.
+  </p>
+  <div class="cover-meta">
+    <div>Temel <span>memex</span></div>
+    <div>Özelleşme <span>papervault</span></div>
+    <div>Yeni katman <span>fetcher · search</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 — memex temeli
+     ══════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag blue">Temel Altyapı</div>
+  <h2>memex: Domain-agnostik wiki motoru</h2>
+  <p class="lead">
+    memex, her tür bilgi biriktirme projesinin üzerine inşa edilebileceği genel amaçlı bir altyapıdır.
+    Ham kaynak dosyasını alıp yapılandırılmış wiki sayfasına dönüştüren ajan döngüsünü tanımlar —
+    domain ne olursa olsun aynı mekanizma çalışır.
+  </p>
+
+  <div style="margin-bottom: 6px;">
+    <div class="layer-row">
+      <div class="layer-label">Giriş</div>
+      <div class="layer-content">
+        <div class="files">
+          <span class="chip chip-dim">wiki/raw/</span>
+          <span class="chip chip-dim">Salt okunur — asla değiştirilmez</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">İşleme</div>
+      <div class="layer-content">
+        <div class="files">
+          <span class="chip chip-blue">runner/</span>
+          <span class="chip chip-blue">locker/</span>
+          <span class="chip chip-blue">validator/</span>
+          <span class="chip chip-blue">scheduler/</span>
+          <span class="chip chip-blue">budget/</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">Bilgi</div>
+      <div class="layer-content">
+        <div class="files">
+          <span class="chip chip-amber">wiki/</span>
+          <span class="chip chip-dim">papers · authors · methods · concepts · venues</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">Süreç</div>
+      <div class="layer-content">
+        <div class="files">
+          <span class="chip chip-dim">agents/</span>
+          <span class="chip chip-dim">memory/</span>
+          <span class="chip chip-dim">journal/</span>
+          <span class="chip chip-dim">scratch/</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">Arama</div>
+      <div class="layer-content">
+        <div class="files">
+          <span class="chip chip-purple">MCP hybrid search</span>
+          <span class="chip chip-dim">BM25 + vektör + RRF</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Tier sistemi: bağlam yönetimi</h3>
+  <p style="color: var(--muted); font-size: 12px; margin-bottom: 16px;">
+    Her oturumda tüm wiki yüklenmez. Tier sistemi hangi dosyaların ne zaman bağlama gireceğini belirler.
+  </p>
+  <div class="solution-row">
+    <div class="sol-problem">Tier 1 — Her oturum</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution"><strong>memory/</strong>, <strong>scratch/</strong>, <strong>journal/</strong> (son 3 gün)</div>
+  </div>
+  <div class="solution-row">
+    <div class="sol-problem">Tier 2 — Alan aktifken</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution"><strong>wiki/index.md</strong>, aktif <strong>agents/*/AGENT.md + MEMORY.md</strong></div>
+  </div>
+  <div class="solution-row">
+    <div class="sol-problem">Tier 3 — Sadece istenince</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution"><strong>wiki/archive/</strong>, <strong>outputs/</strong>, eski journal</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — Akademik paper zorluğu
+     ══════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag" style="background:rgba(248,81,73,0.08); border-color:rgba(248,81,73,0.3); color:var(--red);">Sorun Alanı</div>
+  <h2>Akademik paper neden farklı?</h2>
+  <p class="lead">
+    Genel wiki motoru bir dosyayı işleyebilir — ama akademik paper araştırması bunu çok aşar.
+    PDF çeşitliliği, çok-kaynaklı keşif, atıf grafiği ve süreklilik gereksinimleri
+    memex'in temel tasarımının dışında kalıyordu.
+  </p>
+
+  <div class="problem-grid">
+    <div class="problem-card p1">
+      <div class="problem-num">Sorun 01</div>
+      <h3>Kaynak çeşitliliği</h3>
+      <p>Aynı paper arXiv'de, PMC'de, DOI'de, kurumsal repoda farklı formatlarda (PDF, LaTeX, HTML, XML) bulunur. Tek kaynak yeterli değildir; kalite de değişir.</p>
+      <div class="problem-symptom">"arxiv.org 403 döndü, diğer kaynakları denemedim."</div>
+    </div>
+    <div class="problem-card p2">
+      <div class="problem-num">Sorun 02</div>
+      <h3>Keşif döngüsü</h3>
+      <p>Yeni bir konuya başlarken hangi paper'ların okunmaya değer olduğunu bulmak için web araması, Google Scholar, arXiv browsing gerekir — hepsi ayrı ayrı.</p>
+      <div class="problem-symptom">"Hangi paper'lardan başlayayım bilmiyorum."</div>
+    </div>
+    <div class="problem-card p3">
+      <div class="problem-num">Sorun 03</div>
+      <h3>Atıf grafiği</h3>
+      <p>Paper A, yöntem B'yi kullanır; yöntem B, paper C'de tanımlanmıştır. Bu ilişki ancak ikisini de okuyunca görünür hale gelir.</p>
+      <div class="problem-symptom">"Bu yöntemi başka paper'larda da gördüm ama bağlantısı yok."</div>
+    </div>
+    <div class="problem-card p4">
+      <div class="problem-num">Sorun 04</div>
+      <h3>Tekrarlayan araştırma</h3>
+      <p>Haftalık yeni paper keşfi manuel ve düzensizdir. Bazı alanlar takip edilir, bazıları unutulur. Birikim olmaz.</p>
+      <div class="problem-symptom">"Geçen ay ne okudum, yeni ne çıktı hatırlamıyorum."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 — papervault'un cevapları
+     ══════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag green">Çözümler</div>
+  <h2>papervault: Her soruna bir katman</h2>
+  <p class="lead">
+    Dört soruna dört mimari yanıt. Her biri memex'in temel iskeletine eklenen
+    yeni bir bileşen ya da mevcut bir katmanın domain-spesifik uyarlaması.
+  </p>
+
+  <div class="solution-row">
+    <div class="sol-problem">Sorun 01 · Kaynak çeşitliliği</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution">
+      <strong>src/fetcher/ cascade</strong><br>
+      <span style="color:var(--muted);">12 kaynak adaptörü sırayla denenir (arxiv-api → arxiv-src → pmc → openalex …). Her biri 5 parser formatı destekler. Kalite skoru 0–5 arası hesaplanır; eşik geçilince cascade durur. sources-config.json ile her adapter enable/disable edilir.</span>
+    </div>
+  </div>
+
+  <div class="solution-row">
+    <div class="sol-problem">Sorun 02 · Keşif döngüsü</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution">
+      <strong>src/search/ modülü</strong><br>
+      <span style="color:var(--muted);">Keyword listesini OpenAlex, arXiv, Semantic Scholar, PubMed, Crossref'e paralel gönderir. paper-search-mcp CLI kuruluysa 20+ kaynak otomatik devreye girer. Sonuçlar DOI/arXiv ID üzerinden tekilleştirilir.</span>
+    </div>
+  </div>
+
+  <div class="solution-row">
+    <div class="sol-problem">Sorun 03 · Atıf grafiği</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution">
+      <strong>Çift yönlü wiki linkleri</strong><br>
+      <span style="color:var(--muted);">Her /ingest, wiki/authors/, wiki/methods/, wiki/venues/ sayfalarını günceller veya oluşturur. Her sayfa kaynağına geri bağlanır. Sorgu: "Bu yöntemi hangi paper'lar kullanıyor?" → anında yanıt.</span>
+    </div>
+  </div>
+
+  <div class="solution-row">
+    <div class="sol-problem">Sorun 04 · Tekrarlayan araştırma</div>
+    <div class="arrow-right">→</div>
+    <div class="sol-solution">
+      <strong>research/{topic}/ + GitHub Actions</strong><br>
+      <span style="color:var(--muted);">Her konu için index.md (keyword listesi), candidates.md (☐→☑→✓ kuyruğu), log.md. GitHub Actions Salı–Cuma çalışır; src/research/ yeni adayları candidates.md'ye yazar ve commit atar.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 4 — Pipeline
+     ══════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag">Pipeline</div>
+  <h2>Uçtan uca akış</h2>
+  <p class="lead">
+    Bir arXiv ID'sinin wiki sayfasına dönüşme yolculuğu — manuel tetikleme veya tam otomasyon.
+  </p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+
+    <div>
+      <h3 style="font-size:13px; color:var(--muted); font-weight:500; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">Manuel akış</h3>
+      <div class="pipeline">
+        <div class="pipe-step highlight">
+          <div class="pipe-label">Başlangıç</div>
+          <div class="pipe-title">arXiv ID · DOI · URL</div>
+          <div class="pipe-detail">Kullanıcı candidates.md'den seçer</div>
+        </div>
+        <div class="pipe-arrow">↓</div>
+        <div class="pipe-step highlight">
+          <div class="pipe-label">Fetch · src/fetcher/</div>
+          <div class="pipe-title">Cascade: 12 kaynak × 5 format</div>
+          <div class="pipe-detail">Kalite skoru ≥ eşik → cascade durur</div>
+        </div>
+        <div class="pipe-arrow">↓</div>
+        <div class="pipe-step">
+          <div class="pipe-label">Ham depo (salt okunur)</div>
+          <div class="pipe-title">wiki/raw/papers/{slug}.md</div>
+          <div class="pipe-detail">frontmatter + abstract + full text</div>
+        </div>
+        <div class="pipe-arrow">↓ /ingest</div>
+        <div class="pipe-step highlight">
+          <div class="pipe-label">Araştırmacı ajan</div>
+          <div class="pipe-title">wiki/papers/YYYY-{slug}.md</div>
+          <div class="pipe-detail">Problem · Contributions · Methods · Results · Limitations</div>
+        </div>
+        <div class="pipe-arrow">↓</div>
+        <div class="pipe-step">
+          <div class="pipe-label">Bağlantılı sayfalar</div>
+          <div class="pipe-title">authors/ · methods/ · venues/ · concepts/</div>
+          <div class="pipe-detail">Yeni sayfa oluşturulur veya güncellenir</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:13px; color:var(--muted); font-weight:500; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">Otomatik keşif akışı</h3>
+      <div class="pipeline">
+        <div class="pipe-step">
+          <div class="pipe-label">Tetikleyici</div>
+          <div class="pipe-title">GitHub Actions (Salı–Cuma)</div>
+          <div class="pipe-detail">Daemon: Sal–Per araştırmacı, Pzt orkeströr</div>
+        </div>
+        <div class="pipe-arrow">↓</div>
+        <div class="pipe-step">
+          <div class="pipe-label">Girdi</div>
+          <div class="pipe-title">research/{topic}/index.md</div>
+          <div class="pipe-detail">search_keywords listesi okunur</div>
+        </div>
+        <div class="pipe-arrow">↓</div>
+        <div class="pipe-step highlight">
+          <div class="pipe-label">Arama · src/search/</div>
+          <div class="pipe-title">5 kaynak paralel · dedup</div>
+          <div class="pipe-detail">paper-search-mcp varsa 20+ kaynak</div>
+        </div>
+        <div class="pipe-arrow">↓</div>
+        <div class="pipe-step">
+          <div class="pipe-label">LLM</div>
+          <div class="pipe-title">claude-haiku → JSON</div>
+          <div class="pipe-detail">new_candidates satırları üretilir</div>
+        </div>
+        <div class="pipe-arrow">↓</div>
+        <div class="pipe-step highlight">
+          <div class="pipe-label">Çıktı</div>
+          <div class="pipe-title">research/{topic}/candidates.md</div>
+          <div class="pipe-detail">Git commit + push otomatik</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 5 — Miras zinciri
+     ══════════════════════════════════════ -->
+<div class="page">
+  <div class="section-tag purple">Miras Zinciri</div>
+  <h2>memex'ten ne kaldı, ne değişti</h2>
+  <p class="lead">
+    papervault, memex'ten doğrudan türemiştir. Altyapının büyük bölümü değişmeden miras alınmıştır;
+    domain-spesifik bileşenler sıfırdan yazılmış ya da uyarlanmıştır.
+  </p>
+
+  <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px;">
+    <table class="inherit-table">
+      <thead>
+        <tr>
+          <th>Bileşen</th>
+          <th>Durum</th>
+          <th>memex'te</th>
+          <th>papervault'ta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>wiki/ katmanı</td>
+          <td><span class="badge badge-amber">Uyarlandı</span></td>
+          <td style="color:var(--muted); font-size:12px;">Domain-agnostik</td>
+          <td style="font-size:12px;">papers · authors · methods · concepts · venues</td>
+        </tr>
+        <tr>
+          <td>runner/ · locker/ · validator/</td>
+          <td><span class="badge badge-green">Miras</span></td>
+          <td style="color:var(--muted); font-size:12px;">Genel wiki yazma motoru</td>
+          <td style="font-size:12px;">Değişmedi</td>
+        </tr>
+        <tr>
+          <td>scheduler/ · budget/</td>
+          <td><span class="badge badge-green">Miras</span></td>
+          <td style="color:var(--muted); font-size:12px;">HEARTBEAT.md periyodik tetikleme</td>
+          <td style="font-size:12px;">Değişmedi</td>
+        </tr>
+        <tr>
+          <td>consolidator/</td>
+          <td><span class="badge badge-green">Miras</span></td>
+          <td style="color:var(--muted); font-size:12px;">MEMORY.md → wiki/syntheses/ köprüsü</td>
+          <td style="font-size:12px;">Değişmedi</td>
+        </tr>
+        <tr>
+          <td>agents/ (orchestrator + researcher)</td>
+          <td><span class="badge badge-amber">Uyarlandı</span></td>
+          <td style="color:var(--muted); font-size:12px;">Genel ingest + haftalık sentez</td>
+          <td style="font-size:12px;">Paper-spesifik AGENT.md talimatları</td>
+        </tr>
+        <tr>
+          <td>MCP hybrid search</td>
+          <td><span class="badge badge-green">Miras</span></td>
+          <td style="color:var(--muted); font-size:12px;">BM25 + vektör + RRF</td>
+          <td style="font-size:12px;">Değişmedi</td>
+        </tr>
+        <tr>
+          <td>Tier sistemi</td>
+          <td><span class="badge badge-green">Miras</span></td>
+          <td style="color:var(--muted); font-size:12px;">Tier 1/2/3 bağlam yönetimi</td>
+          <td style="font-size:12px;">Değişmedi</td>
+        </tr>
+        <tr>
+          <td>src/fetcher/</td>
+          <td><span class="badge badge-blue">Yeni</span></td>
+          <td style="color:var(--muted); font-size:12px;">—</td>
+          <td style="font-size:12px;">12 adapter · 5 parser · kalite cascade</td>
+        </tr>
+        <tr>
+          <td>src/search/</td>
+          <td><span class="badge badge-blue">Yeni</span></td>
+          <td style="color:var(--muted); font-size:12px;">—</td>
+          <td style="font-size:12px;">5 kaynak + paper-search-mcp opsiyonel</td>
+        </tr>
+        <tr>
+          <td>research/{topic}/</td>
+          <td><span class="badge badge-amber">Uyarlandı</span></td>
+          <td style="color:var(--muted); font-size:12px;">podcasts.md (URL kuyruğu)</td>
+          <td style="font-size:12px;">candidates.md (arXiv ID / DOI kuyruğu)</td>
+        </tr>
+        <tr>
+          <td>LLM paketi</td>
+          <td><span class="badge badge-green">Miras</span></td>
+          <td style="color:var(--muted); font-size:12px;">@ai-sdk/* (multi-provider)</td>
+          <td style="font-size:12px;">Aynı — anthropic · openai · google · deepseek · llama · grok</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 24px;">
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 700; color: var(--green); font-family: 'JetBrains Mono', monospace;">7</div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Değişmeden miras alınan<br>bileşen</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 700; color: var(--amber); font-family: 'JetBrains Mono', monospace;">3</div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Domain'e uyarlanan<br>bileşen</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 700; color: var(--blue); font-family: 'JetBrains Mono', monospace;">2</div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Sıfırdan yazılan<br>yeni bileşen</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
